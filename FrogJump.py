@@ -1,5 +1,4 @@
 
-
 def frog_jump(steps):
     if steps < 1:
         return 0
