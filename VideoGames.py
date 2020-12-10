@@ -33,11 +33,14 @@ dinosaur = Dinosaur.APATOSAURUS
 dinosaur_level = 1
 food = 1000
 coins = 100
+dinobucks = 10
 food_production_level = 1
 max_food_production = food_production_level * 1000
 dinosaur_HP = 50
 dinosaur_attack = 25
 victories = 0
+coin_victories = 0
+dinobuck_victories = 0
 defeats = 0
 total_battles = 0
 print("Welcome to Jurrassic World Alive!")
@@ -92,7 +95,9 @@ while running:
                     max_food_production = food_production_level * 1000
                     print(f"Food production is now at level {food_production_level}.")
     elif option.lower() == "view inventory" or option == '3':
-        print("This feature is coming soon.")
+        print(f"You have {food} food.")
+        print(f"You have {coins} coins.")
+        print(f"You have {dinobucks} dinobucks.")
     elif option.lower() == "view dinosaurs" or option == '4':
         print(f"You have an {dinosaur} at level {dinosaur_level}.")
         print(f"Your {dinosaur} has {dinosaur_HP} health and {dinosaur_attack} attack")
@@ -114,12 +119,27 @@ while running:
         print(f"Your {dinosaur.lower()}'s attack is {dinosaur_attack}.")
         if get_input2("Are you sure you want to battle (y/n)? ").lower() == "y":
             battle_HP = dinosaur_HP
-            if random.randint(0, 2) == 0:
-                enemy_HP = dinosaur_attack
-                enemy_attack = dinosaur_HP
-            else:
-                enemy_HP = dinosaur_HP * 2
-                enemy_attack = floor(dinosaur_attack / 2)
+            difficulty = get_input2("What difficulty would you like to do (easy (1), medium (2), hard (3)) ")
+            enemy_attack = -1
+            while enemy_attack < 15:
+                random_stats = random.randint(-10, 10)
+                if difficulty == 'easy' or difficulty == '1':
+                    difficulty = 1
+                    enemy_HP = floor(dinosaur_HP * 1.5) + random_stats
+                    enemy_attack = floor(dinosaur_attack / 3) - random_stats / 2
+                elif difficulty == 'medium' or difficulty == '2':
+                    difficulty = 2
+                    enemy_HP = dinosaur_HP * 2 + random_stats * 2
+                    enemy_attack = floor(dinosaur_attack / 2) - random_stats
+                elif difficulty == 'hard' or difficulty == '3':
+                    difficulty = 3
+                    enemy_HP = (dinosaur_HP + random_stats) * 3
+                    enemy_attack = floor(dinosaur_attack/1.5) - random_stats * 3
+                else:
+                    difficulty = 1
+                    enemy_HP = floor(dinosaur_HP * 1.5)
+                    enemy_attack = floor(dinosaur_attack / 3)
+
             print("")
             print("Searching for a battle...")
             time.sleep(random.randint(1, 5))
@@ -154,18 +174,29 @@ while running:
                     third_battle_option = get_input2('What else would you like to do (attack (1) , shield (2))? ')
 
                 if enemy_hexagon_point == 0:
-                    enemy_option = get_enemy_option(1, 3)
+                    enemy_option = get_enemy_option(1, 4)
                     second_enemy_option = 0
                     third_enemy_option = 0
                 elif enemy_hexagon_point == 1:
-                    enemy_option = get_enemy_option(1, 3)
-                    second_enemy_option = get_enemy_option(1, 3)
+                    enemy_option = get_enemy_option(1, 4)
+                    second_enemy_option = get_enemy_option(1, 4)
                     third_enemy_option = 0
                 else:
-                    enemy_option = get_enemy_option(1, 3)
-                    second_enemy_option = get_enemy_option(1, 3)
-                    third_enemy_option = get_enemy_option(1, 2)
+                    if random.randint(1, 3) == 1:
+                        enemy_option = get_enemy_option(1, 3)
+                        second_enemy_option = get_enemy_option(1, 3)
+                        third_enemy_option = get_enemy_option(1, 2)
+                    else:
+                        enemy_option = 1
+                        second_enemy_option = 1
+                        third_enemy_option = 1
                 # 1 = attack, 2 = shield, 3 = hexagon
+
+                if enemy_option == 4:
+                    enemy_option = EnemyBattleOption.ATTACK
+
+                if second_enemy_option == 4:
+                    second_enemy_option = EnemyBattleOption.ATTACK
                 hexagon_point = 0
                 enemy_hexagon_point = 0
 
@@ -263,8 +294,34 @@ while running:
                 print("Defeat")
             else:
                 victories += 1
-                coins += (100 + victories * 10)
                 print("Victory!")
-                print(f"You earned {100 + victories * 10} coins!")
+                if difficulty == 1:
+                    if random.randint(1, 3) == 3:
+                        dinobuck_victories += 1
+                        dinobucks += (10 + dinobuck_victories * 10)
+                        print(f"You earned {9 + dinobuck_victories} dinobucks!")
+                    else:
+                        coin_victories += 1
+                        coins += (100 + victories * 10)
+                        print(f"You earned {90 + coin_victories * 10} coins!")
+                elif difficulty == 2:
+                    if random.randint(1, 3) == 3:
+                        dinobuck_victories += 1
+                        dinobucks += (10 + victories * 10)
+                        print(f"You earned {13.5 + dinobuck_victories * 1.5} dinobucks!")
+                    else:
+                        coin_victories += 1
+                        coins += (100 + victories * 10)
+                        print(f"You earned {135 + coin_victories * 15} coins!")
+                else:
+                    if random.randint(1, 3) == 3:
+                        dinobuck_victories += 1
+                        dinobucks += (10 + victories * 10)
+                        print(f"You earned {18 + dinobuck_victories * 2} dinobucks!")
+                    else:
+                        coin_victories += 1
+                        coins += (100 + victories * 10)
+                        print(f"You earned {180 + coin_victories * 20} coins!")
+
     else:
         print(f"You can't" + f' {option}')
