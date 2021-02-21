@@ -1,5 +1,5 @@
-from Play.timeit import timeit
 from importlib import resources
+from utils.timeit import timeit
 
 
 def get_data():
@@ -45,15 +45,35 @@ def _merge_list(a, b):
 
     return return_list
 
+
 @timeit
+def my_merge_sort(input_list):
+    return merge_sort(input_list)
+
+
 def merge_sort(input_list):
     if len(input_list) == 1:
         return input_list
+    if len(input_list) == 2:
+        return input_list if input_list[0] <= input_list[1] else \
+                [input_list[1], input_list[0]]
+
     a, b = _spilt_list(input_list)
     a_sorted = merge_sort(a)
     b_sorted = merge_sort(b)
     return _merge_list(a_sorted, b_sorted)
 
+
+@timeit
+def bucket_sort(range_1, range_2, input_list):
+    count = range_2 - range_1 + 1
+    buckets = [0] * count
+    output = []
+    for i in input_list:
+        buckets[i] += 1
+    for i in range(count):
+       output += [i] * buckets[i]
+    return output
 
 @timeit
 def insertion_sort(input):
@@ -87,13 +107,11 @@ def insertion_sort(input):
                         index += 1
                         break
             index_2 = 0
-
-
-    print(output_list)
+    return output_list
 
 
 test_mode = False
 input = get_data()
-insertion_sort(input)
-
-print(merge_sort(input))
+print(insertion_sort(input))
+print(bucket_sort(1, 10000, input))
+print(my_merge_sort(input))
