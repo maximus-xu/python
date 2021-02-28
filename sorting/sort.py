@@ -11,6 +11,41 @@ def get_data():
             return [int(line) for line in lines]
 
 
+@timeit
+def insertion_sort(input):
+    output_list = []
+    index = 0
+    index_2 = 0
+    valid = False
+
+    while not valid:
+        if len(output_list) == 0:
+            output_list.append(input[index])
+            index += 1
+
+        else:
+            if len(output_list) == len(input):
+                valid = True
+            else:
+                while index < len(input):
+                    number_1 = input[index]
+                    number_2 = output_list[index_2]
+
+                    if number_1 > number_2:
+                        if index_2 + 1 == len(output_list):
+                            output_list.append(number_1)
+                            index += 1
+                            break
+                        else:
+                            index_2 += 1
+                    else:
+                        output_list.insert(index_2, number_1)
+                        index += 1
+                        break
+            index_2 = 0
+    return output_list
+
+
 def _spilt_list(x):
     middle = int(len(x)/2)
     a = x[:middle]
@@ -75,43 +110,24 @@ def bucket_sort(range_1, range_2, input_list):
        output += [i] * buckets[i]
     return output
 
+
 @timeit
-def insertion_sort(input):
-    output_list = []
-    index = 0
-    index_2 = 0
-    valid = False
+def bubble_sort(input_list):
+    for i in range(len(input_list)):
+        min = input_list[i]
+        position = i
+        for j in range(i+1, len(input_list)):
+            if input_list[j] < min:
+                min = input_list[j]
+                position = j
+        input_list[position] = input_list[i]
+        input_list[i] = min
 
-    while not valid:
-        if len(output_list) == 0:
-            output_list.append(input[index])
-            index += 1
-
-        else:
-            if len(output_list) == len(input):
-                valid = True
-            else:
-                while index < len(input):
-                    number_1 = input[index]
-                    number_2 = output_list[index_2]
-
-                    if number_1 > number_2:
-                        if index_2 + 1 == len(output_list):
-                            output_list.append(number_1)
-                            index += 1
-                            break
-                        else:
-                            index_2 += 1
-                    else:
-                        output_list.insert(index_2, number_1)
-                        index += 1
-                        break
-            index_2 = 0
-    return output_list
-
+    return input_list
 
 test_mode = False
 input = get_data()
 print(insertion_sort(input))
 print(bucket_sort(1, 10000, input))
 print(my_merge_sort(input))
+print(bubble_sort(get_data()))
