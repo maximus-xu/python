@@ -6,3 +6,9 @@ def reverse(input):
 
     return output
 
+
+def recursion_reverse(input):
+    if not input:
+        return []
+    return recursion_reverse(input[1:]) + input[0:1]
+
