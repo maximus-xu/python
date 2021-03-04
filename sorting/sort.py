@@ -128,6 +128,6 @@ def bubble_sort(input_list):
 test_mode = False
 input = get_data()
 print(insertion_sort(input))
-print(bucket_sort(1, 10000, input))
+print(bucket_sort(1, 9999, input))
 print(my_merge_sort(input))
 print(bubble_sort(get_data()))
