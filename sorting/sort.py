@@ -107,7 +107,7 @@ def bucket_sort(range_1, range_2, input_list):
     for i in input_list:
         buckets[i] += 1
     for i in range(count):
-        output += [i] * buckets[i]
+       output += [i] * buckets[i]
     return output
 
 
