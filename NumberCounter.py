@@ -8,8 +8,5 @@ def count(input, search_number):
     elif input[-1] < search_number:
         return 0
 
-    middle = round(len(input ) /2)
+    middle = round(len(input)/2)
     return count(input[:middle], search_number) + count(input[middle:], search_number)
-
-
-print(count([1], 1))

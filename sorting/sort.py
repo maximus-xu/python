@@ -10,7 +10,6 @@ def get_data():
             lines = data.readlines()
             return [int(line) for line in lines]
 
-
 @timeit
 def insertion_sort(input):
     output_list = []
