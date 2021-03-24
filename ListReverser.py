@@ -12,9 +12,3 @@ def recursion_reverse(input):
         return []
     return recursion_reverse(input[1:]) + input[0:1]
 
-
-def abc(input):
-    return (input - 2)*180/input
-
-
-print(abc(9000000000000000000000000000000000000000000000))
