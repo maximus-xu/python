@@ -1,6 +1,6 @@
 from math import ceil, floor
 
-from python.utils import get_input2, parse_input_int
+from utils import get_input2, parse_input_int
 
 import random, time
 
