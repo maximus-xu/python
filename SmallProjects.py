@@ -1,4 +1,3 @@
-
 def parenthesis(left, right, input):
     if right == 0:
         print(input)
@@ -30,4 +29,7 @@ def number_combo(input, output):
     else:
         number_combo(short, output + [input[0]])
         number_combo(short, output + [-input[0]])
-        number_combo(short, output[:-1] + [output[-1] * 10 + input[0]] if output[-1] > 0 else [output[-1] * 10] + [-input[0]])
+        number_combo(short, output[:-1] + [output[-1] * 10 + input[0]] if output[-1] > 0 else
+                                                                                [output[-1] * 10] + [-input[0]])
+
+
