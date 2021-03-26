@@ -30,7 +30,7 @@ def number_combo(input, output):
         number_combo(short, output + [input[0]])
         number_combo(short, output + [-input[0]])
         number_combo(short, output[:-1] + [output[-1] * 10 + input[0]] if output[-1] > 0 else
-        [output[-1] * 10] + [-input[0]])
+                                                                                [output[-1] * 10] + [-input[0]])
 
 
 def string_equation(input):
@@ -55,6 +55,3 @@ def string_equation(input):
         total += i
 
     print(total)
-
-
-string_equation('1 + 1 - 2 + 10000 - 10000 + 0 - 0')
