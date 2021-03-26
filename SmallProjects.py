@@ -35,26 +35,21 @@ def number_combo(input, output):
 
 def string_equation(input):
     equation = ''
+
     for i in range(len(input)):
         if input[i] != ' ':
             equation += input[i]
     equation = equation.split('+')
-    if type(equation) == str:
-        equation = [equation]
     total = 0
+
     for i in range(len(equation)):
         try:
             equation[i] = int(equation[i])
         except:
-            sub_total = 0
             equation[i] = equation[i].split('-')
-
             for j in range(len(equation[i])):
-                if j == 0:
-                    sub_total += int(equation[i][j])
-                else:
-                    sub_total -= int(equation[i][j])
-            equation[i] = sub_total
+                total += int(equation[i][j]) if j == 0 else -int(equation[i][j])
+            equation[i] = 0
 
     for i in equation:
         total += i
@@ -62,4 +57,4 @@ def string_equation(input):
     print(total)
 
 
-string_equation('')
+string_equation('1 + 1 - 2 + 10000 - 10000 + 0 - 0')
