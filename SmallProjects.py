@@ -91,7 +91,15 @@ def get_first_number(input):
 
 def eight_queens(positions):
     if len(positions) == 8:
-        print(positions)
+        for i in positions:
+            line = ''
+            for j in range(9):
+                if j == i[1]:
+                    line += 'Q '
+                elif j != 0:
+                    line += '. '
+            print(line)
+        print('')
         return
 
     row = positions[-1][0] + 1 if positions else 1
