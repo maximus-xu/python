@@ -88,3 +88,28 @@ def get_first_number(input):
         return number, i+1 if i == len(input)-1 else i
     return -number, i+1 if i == len(input)-1 else i
 
+
+def eight_queens(positions):
+    if len(positions) == 8:
+        print(positions)
+        return
+
+    row = positions[-1][0] + 1 if positions else 1
+    possible = [1, 2, 3, 4, 5, 6, 7, 8]
+    for i in positions:
+        possible.remove(i[1])
+    for i in positions:
+        diagonal = i[1]
+        diagonal_2 = i[1]
+        for i in range(row - i[0]):
+            diagonal += 1
+            diagonal_2 -= 1
+        if diagonal in possible:
+            possible.remove(diagonal)
+        if diagonal_2 in possible:
+            possible.remove(diagonal_2)
+    for i in possible:
+        eight_queens(positions + [[row, i]])
+
+
+eight_queens([])
