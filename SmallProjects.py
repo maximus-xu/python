@@ -89,32 +89,65 @@ def string_equation_2(input):
 
 
 def eight_queens(positions):
-    if len(positions) == 8:
-        for i in positions:
+    BOARD_SIZE = 8
+    def print_queens(positions):
+        for p in positions:
             line = ''
-            for j in range(9):
-                if j == i[1]:
+            for col in range(BOARD_SIZE):
+                if col == p:
                     line += 'Q  '
-                elif j != 0:
+                else:
                     line += '.  '
             print(line)
         print()
         return
 
-    row = positions[-1][0] + 1 if positions else 1
-    possible = [1, 2, 3, 4, 5, 6, 7, 8]
-    for i in positions:
-        possible.remove(i[1])
-    for i in positions:
-        diagonal = i[1]
-        diagonal_2 = i[1]
-        for i in range(row - i[0]):
-            diagonal += 1
-            diagonal_2 -= 1
-        if diagonal in possible:
-            possible.remove(diagonal)
-        if diagonal_2 in possible:
-            possible.remove(diagonal_2)
-    for i in possible:
-        eight_queens(positions + [[row, i]])
+    if len(positions) == BOARD_SIZE:
+        return print_queens(positions)
+
+    possible = list(range(BOARD_SIZE))
+
+    def remove_column():
+        for p in positions:
+            possible.remove(p)
+
+    def remove_diagonal():
+        row = len(positions)
+        for i, p in enumerate(positions):
+            row_diff = row - i
+            diagonal_right = p + row_diff
+            diagonal_left = p - row_diff
+
+            if diagonal_right in possible:
+                possible.remove(diagonal_right)
+            if diagonal_left in possible:
+                possible.remove(diagonal_left)
+
+    remove_column()
+    remove_diagonal()
+    for p in possible:
+        eight_queens(positions + [p])
+
+
+restriction_perm_result = []
+
+
+def restriction_perm(input, restrictions, used):
+    global restriction_perm_result
+
+    def can_use(input, restrictions, used):
+        if input in used:
+            return False
+        for restriction in restrictions:
+            if input == restriction[1] and restriction[0] not in used:
+                return False
+        return True
+
+    if len(input) == len(used):
+        restriction_perm_result += [used]
+        return
+    for i in range(len(input)):
+        if can_use(input[i], restrictions, used):
+            restriction_perm(input, restrictions, used+[input[i]])
+
 
