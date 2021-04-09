@@ -151,3 +151,17 @@ def restriction_perm(input, restrictions, used):
             restriction_perm(input, restrictions, used+[input[i]])
 
 
+def letter_card(boxes, word, used):
+    def can_use(box, used_boxes, letter):
+        return box not in used_boxes and letter in box
+
+    if not word:
+        return True
+
+    for i in range(len(boxes)):
+        if can_use(boxes[i], used, word[0]):
+            if letter_card(boxes, word[1:], used + [boxes[i]]):
+                return True
+    return False
+
+
