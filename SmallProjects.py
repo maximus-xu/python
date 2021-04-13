@@ -178,11 +178,11 @@ def palindrome_permutation(input):
     odd_count = 0
     for character in input:
         letter = input[0]
-        count = 0
+        letter_count = 0
         for item in input:
             if item == letter:
-                count += 1
-        if count % 2 != 0:
+                letter_count += 1
+        if letter_count % 2 != 0:
             odd_count += 1
 
     return odd_count < 2
