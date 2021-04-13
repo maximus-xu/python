@@ -158,3 +158,16 @@ def fences(map, start):
     visited = []
     print(visit(map, start, visited))
 
+
+def check_permutation(str_1, str_2):
+    if len(str_1) != len(str_2):
+        return False
+    if not str_1:
+        return True
+    letter = str_1[0]
+    if letter in str_2:
+        str_1.remove(letter)
+        str_2.remove(letter)
+        return check_permutation(str_1, str_2)
+    return False
+
