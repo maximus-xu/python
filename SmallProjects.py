@@ -171,3 +171,19 @@ def check_permutation(str_1, str_2):
         return check_permutation(str_1, str_2)
     return False
 
+
+def palindrome_permutation(input):
+    if not input:
+        return True
+    odd_count = 0
+    for character in input:
+        letter = input[0]
+        count = 0
+        for item in input:
+            if item == letter:
+                count += 1
+        if count % 2 != 0:
+            odd_count += 1
+
+    return odd_count < 2
+
