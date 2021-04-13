@@ -30,7 +30,7 @@ def number_combo(input, output):
         number_combo(short, output + [input[0]])
         number_combo(short, output + [-input[0]])
         number_combo(short, output[:-1] + [output[-1] * 10 + input[0]] if output[-1] > 0 else
-                                                                                [output[-1] * 10] + [-input[0]])
+        [output[-1] * 10] + [-input[0]])
 
 
 def string_equation(input):
@@ -56,40 +56,9 @@ def string_equation(input):
     print(total)
 
 
-def string_equation_2(input):
-    def get_first_number(input):
-        digits = [c for c in "0123456789"]
-        negative = 0
-        number = 0
-        for i in range(len(input)):
-            if input[i] == '-':
-                negative += 1
-            elif input[i] in digits:
-                index = i
-                break
-
-        for i in range(index, len(input)):
-            if input[i] in digits:
-                number *= 10
-                number += int(input[i])
-            else:
-                break
-
-        if negative % 2 == 0:
-            return number, i + 1 if i == len(input) - 1 else i
-        return -number, i + 1 if i == len(input) - 1 else i
-
-    total = 0
-    i = 0
-    while i < len(input):
-        first, index = get_first_number(input[i:])
-        total += first
-        i += index
-    print(total)
-
-
 def eight_queens(positions):
     BOARD_SIZE = 8
+
     def print_queens(positions):
         for p in positions:
             line = ''
@@ -129,9 +98,6 @@ def eight_queens(positions):
         eight_queens(positions + [p])
 
 
-restriction_perm_result = []
-
-
 def restriction_perm(input, restrictions, used):
     global restriction_perm_result
 
@@ -148,7 +114,7 @@ def restriction_perm(input, restrictions, used):
         return
     for i in range(len(input)):
         if can_use(input[i], restrictions, used):
-            restriction_perm(input, restrictions, used+[input[i]])
+            restriction_perm(input, restrictions, used + [input[i]])
 
 
 def letter_card(boxes, word, used):
@@ -164,4 +130,31 @@ def letter_card(boxes, word, used):
                 return True
     return False
 
+
+def fences(map, start):
+    def is_house(houses, house, visited):
+        x = house[0]
+        y = house[1]
+        return 0 <= x < len(map) and \
+            0 <= y < len(map[0]) and \
+            house not in visited and \
+            houses[x][y] == 1
+
+    def visit(houses, house, visited):
+        if not is_house(houses, house, visited):
+            return 0
+        total = 0
+        x = house[0]
+        y = house[1]
+        visited += [house]
+        total += 1 if is_house(houses, (x + 1, y), visited) else 0
+        total += 1 if is_house(houses, (x, y + 1), visited) else 0
+
+        for d in directions:
+            total += visit(houses, (x + d[0], y + d[1]), visited)
+        return total
+
+    directions = [(0, -1), (0, 1), (-1, 0), (1, 0)]
+    visited = []
+    print(visit(map, start, visited))
 
