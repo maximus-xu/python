@@ -176,14 +176,14 @@ def palindrome_permutation(input):
     if not input:
         return True
     odd_count = 0
+    letters = []
     for character in input:
-        letter = input[0]
         letter_count = 0
-        for item in input:
-            if item == letter:
-                letter_count += 1
-        if letter_count % 2 != 0:
-            odd_count += 1
-
+        if character not in letters:
+            for item in input:
+                if item == character:
+                    letter_count += 1
+            if letter_count % 2 != 0:
+                odd_count += 1
+        letters.append(character)
     return odd_count < 2
-
