@@ -34,15 +34,13 @@ def check_permutation_2(str_1, str_2):
     if len(str_1) != len(str_2):
         return False
 
-    str_1_count = {}
-    str_2_count = {}
-    for item in str_1:
-        str_1_count[item] = str_1_count.get(item, 0) + 1
+    def count_items(a):
+        map = {}
+        for item in a:
+            map[item] = map.get(item, 0) + 1
+        return map
 
-    for item in str_2:
-        str_2_count[item] = str_2_count.get(item, 0) + 1
-
-    return str_1_count == str_2_count
+    return count_items(str_1) == count_items(str_2)
 
 
 def palindrome_permutation_2(input):
@@ -60,4 +58,4 @@ def palindrome_permutation_2(input):
     return True
 
 
-print(check_permutation_2('', ''))
+print(check_permutation_2('abc', 'bad'))
