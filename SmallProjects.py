@@ -187,3 +187,16 @@ def palindrome_permutation(input):
                 odd_count += 1
         letters.append(character)
     return odd_count < 2
+
+
+def pairs_with_sum(input, number):
+    checked = 0
+    sums = []
+    for i in range(len(input)):
+        for j in range(len(input)):
+            sums += [f'{input[i]} + {input[j]}'] if input[i] + input[j] == number and j > checked else []
+        checked += 1
+    return sums
+
+
+print(pairs_with_sum([], ))
