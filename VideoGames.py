@@ -1,6 +1,29 @@
 from math import ceil, floor
 
-from utils import get_input2, parse_input_int
+
+def parse_input_int(raw):
+    try:
+        return int(raw)
+    except:
+        return "error"
+
+
+def parse_input_str(raw):
+    try:
+        return str(raw)
+    except:
+        return -1
+
+
+def get_input2(message):
+    valid = False
+    while not valid:
+        raw_input = input(message)
+        output = parse_input_str(raw_input)
+        if output == -1:
+            print("Please enter a valid answer.")
+        else:
+            return output
 
 import random, time
 
@@ -25,7 +48,7 @@ class EnemyBattleOption:
 
 
 class Dinosaur:
-    APATOSAURUS = "Apatosaurus"
+    APATOSAURUS = "AM-1 Mauler"
 
 
 running = True
@@ -43,7 +66,7 @@ coin_victories = 0
 dinobuck_victories = 0
 defeats = 0
 total_battles = 0
-print("Welcome to Jurrassic World Alive!")
+print("Welcome to Jurassic World Alive!")
 print("")
 print(f"You have an {dinosaur} at level {dinosaur_level}.")
 print(f"You have {food} food.")
@@ -51,7 +74,7 @@ print(f"You have {food} food.")
 while running:
     print("")
     option = get_input2("What would you like to do (make food (1), upgrade (2), view inventory (3), "
-                        "view dinosaurs (4), feed dinosaurs (5), battle (6))? ")
+                        "view dinosaurs (4), feed dinosaurs (5), battle (6), quit (7))? ")
     if option.lower() == "make food" or option == '1':
         input_food = get_input2("Activate food production how many times? ")
         if parse_input_int(input_food) != "error":
@@ -121,7 +144,7 @@ while running:
             battle_HP = dinosaur_HP
             difficulty = get_input2("What difficulty would you like to do (easy (1), medium (2), hard (3)) ")
             enemy_attack = -1
-            while enemy_attack < 15:
+            while enemy_attack < 8:
                 random_stats = random.randint(-10, 10)
                 if difficulty == 'easy' or difficulty == '1':
                     difficulty = 1
@@ -322,6 +345,7 @@ while running:
                         coin_victories += 1
                         coins += (100 + victories * 10)
                         print(f"You earned {180 + coin_victories * 20} coins!")
-
+    elif option.lower() == "quit" or option == '7':
+        break
     else:
         print(f"You can't" + f' {option}')
