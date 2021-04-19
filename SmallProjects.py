@@ -1,3 +1,6 @@
+import unittest
+
+
 def parenthesis(left, right, input):
     if right == 0:
         print(input)
@@ -190,13 +193,52 @@ def palindrome_permutation(input):
 
 
 def pairs_with_sum(input, number):
-    checked = 0
     sums = []
     for i in range(len(input)):
         for j in range(len(input)):
-            sums += [f'{input[i]} + {input[j]}'] if input[i] + input[j] == number and j > checked else []
-        checked += 1
+            sums += [f'{input[i]} + {input[j]}'] if input[i] + input[j] == number and j > i else []
     return sums
 
 
-print(pairs_with_sum([], ))
+def build_number_dictionary(input):
+    numbers = {}
+    for num in input:
+        numbers[num] = numbers.get(num, 0) + 1
+    return numbers
+
+
+def pairs_with_sum2(input, number):
+
+    def print_equation(matching):
+        print(f'{num} + {matching}')
+
+    def subtract_from_count(matching):
+        numbers[num] = numbers.get(num) - 1
+        numbers[matching] = numbers.get(matching) - 1
+
+    def find_matching():
+        matching = number - num
+        if numbers.get(matching, 0) >= 1:
+            if num != matching or (num == matching and numbers.get(num) > 1):
+                print_equation()
+                subtract_from_count(matching)
+
+    numbers = build_number_dictionary(input)
+
+    for num in input:
+        find_matching(num)
+
+
+# pairs_with_sum2([1, 2, 2, 2, 2, 3, 4, 5, 6], 4)
+
+
+class ProjectTest(unittest.TestCase):
+
+    def test_build_number_dictionary(self):
+        numbers = [1, 2, 2, 4, 3, 5, 4, 2]
+        number_dict = build_number_dictionary(numbers)
+        self.assertEqual(number_dict, {1: 1, 2: 3, 3: 1, 4: 2, 5: 1})
+
+
+if __name__ == '__main__':
+    unittest.main()
