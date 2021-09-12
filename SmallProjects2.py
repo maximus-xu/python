@@ -58,4 +58,74 @@ def palindrome_permutation_2(input):
     return True
 
 
-print(check_permutation_2('abc', 'bad'))
+def get_index(book):
+    def get_words(input):
+        output = []
+        word = ''
+        for letter in input:
+            if letter != ' ':
+                word += letter
+            else:
+                try:
+                    word = int(word)
+                except:
+                    output += [word]
+                word = ''
+        output += [word]
+        return output
+
+    index = {}
+    for page in range(len(book)):
+        book[page] = book[page].lower()
+        for w in get_words(book[page]):
+            if w not in index:
+                index[w] = [page]
+            elif index[w][-1] != page:
+                index[w] += [page]
+
+    return index
+
+
+a = ['There are so many great short stories and so many poem',
+     'that I was unable to trim the list to 100 titles',
+     'so here are 160 Great Short Stories for you to enjoy.',
+     'Click a button to find the best',
+     'short stories from the authors below.'
+    ]
+
+
+def build_dic(input):
+    dic = {}
+    for i in input:
+        dic[i] = 1 if i not in dic else dic[i] + 1
+    return dic
+
+
+def number_add(list_1, list_2, number):
+    output = []
+    dic = build_dic(list_1)
+    for i in list_2:
+        pair_value = number - i
+        if pair_value in dic:
+            output.append((i, pair_value))
+            if dic[pair_value] > 1:
+                dic[pair_value] -= 1
+            else:
+                dic.pop(pair_value)
+    return output
+
+
+def a(input_list):
+    if len(input_list) == 1:
+        return True
+    steps = input_list[0]
+    if steps == 0:
+        return False
+    for i in range(steps):
+        a(input_list[steps:])
+
+
+l1 = [3, 1, 2, 1, 1, 4]
+l2 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+print(number_add(l1, l2, 9))

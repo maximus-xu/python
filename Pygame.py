@@ -6,10 +6,10 @@ import time
 from pygame.locals import *
 
 pygame.init()
-WIDTH = 1500
-HEIGHT = 900
+WIDTH = 3440
+HEIGHT = 1375
 FPSCLOCK = pygame.time.Clock()
-BLOCK_SIZE = 20
+BLOCK_SIZE = 40
 BASICFONT = pygame.font.SysFont("SIMYOU.TTF", 80)
 
 DISPLAY = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -23,6 +23,7 @@ class Colors:
     GREY2 = pygame.Color(50, 50, 50)
     BLUE = pygame.Color(100, 150, 255)
     YELLOW = pygame.Color(255, 255, 0)
+    GREEN = pygame.Color(50, 255, 50)
 
 
 class Directions:
@@ -84,28 +85,35 @@ def new_coin():
     return [(random.randrange(1, math.floor(WIDTH/size))) * size, (random.randrange(1, math.floor(HEIGHT/size))) * size]
 
 
+def has_collision(body):
+    new_body = [(b[0], b[1]) for b in body]
+    return len(new_body) != len(set(new_body))
+
+
 size = BLOCK_SIZE
 body = [[0, 0], [20, 0], [40, 0]]
 coin_location = new_coin()
 score = 0
 pygame.init()
 event = pygame.event
-fps = 10
 direction = Directions.RIGHT
 coin_color = Colors.BLACK
 distance = None
+paused = False
 
 while True:
+    fps = len(body)
     head = body[-1].copy()
+    tail = body[0]
 
     FPSCLOCK.tick(fps)
 
     DISPLAY.fill(Colors.BLACK)
 
     for item in body:
-        draw_rect(item, Colors.WHITE)
+        draw_rect(item, Colors.GREEN)
 
-    draw_rect(coin_location, Colors.YELLOW)
+    draw_rect(coin_location, Colors.RED)
     draw_text(str(score), WIDTH/2, HEIGHT/2)
     pygame.display.flip()
 
@@ -113,18 +121,18 @@ while True:
         if event.type == QUIT or (event.type == KEYDOWN and event.key == K_q):
             pygame.quit()
             sys.exit()
-        elif event.type == KEYDOWN:
-            direction_map = {
-                K_w: Directions.UP,
-                K_UP: Directions.UP,
-                K_a: Directions.LEFT,
-                K_LEFT: Directions.LEFT,
-                K_s: Directions.DOWN,
-                K_DOWN: Directions.DOWN,
-                K_d: Directions.RIGHT,
-                K_RIGHT: Directions.RIGHT
-            }
-            direction = direction_map.get(event.key, direction)
+        elif event.type == KEYDOWN and (event.key == K_UP or event.key == K_w) and direction != Directions.DOWN:
+            direction = Directions.UP
+            break
+        elif event.type == KEYDOWN and (event.key == K_DOWN or event.key == K_s) and direction != Directions.UP:
+            direction = Directions.DOWN
+            break
+        elif event.type == KEYDOWN and (event.key == K_LEFT or event.key == K_a) and direction != Directions.RIGHT:
+            direction = Directions.LEFT
+            break
+        elif event.type == KEYDOWN and (event.key == K_RIGHT or event.key == K_d) and direction != Directions.LEFT:
+            direction = Directions.RIGHT
+            break
 
     if direction == Directions.UP:
         head[1] -= size
@@ -144,10 +152,14 @@ while True:
     if head[1] > HEIGHT - size or head[1] < 0:
         game_over()
         break
+    if has_collision(body):
+        game_over()
+        break
 
     if head == coin_location:
         coin_location = new_coin()
         score += 1
+        body.insert(0, tail)
 
 
 
