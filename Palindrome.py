@@ -19,6 +19,9 @@ def a(steps):
         return 1
     return a(steps-1) + a(steps-2) + a(steps-3)
 
-
-for i in range(8):
-    print(a(i))
+sum = 0
+for i in range(100000):
+    if 10000 <= i <= 99999:
+        if palindrome_recursion(str(i)):
+            sum += i
+print(sum)
