@@ -123,9 +123,3 @@ def a(input_list):
         return False
     for i in range(steps):
         a(input_list[steps:])
-
-
-l1 = [3, 1, 2, 1, 1, 4]
-l2 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-print(number_add(l1, l2, 9))
