@@ -48,7 +48,7 @@ class EnemyBattleOption:
 
 
 class Dinosaur:
-    APATOSAURUS = "AM-1 Mauler"
+    APATOSAURUS = "F-4E Phantom II"
 
 
 running = True
@@ -126,13 +126,13 @@ while running:
         print(f"Your {dinosaur} has {dinosaur_HP} health and {dinosaur_attack} attack")
     elif option.lower() == "feed dinosaurs" or option == '5':
         if food >= dinosaur_level * 1000:
-            print(f"Feeding {dinosaur.lower()}...")
+            print(f"Feeding {dinosaur}...")
             time.sleep(3)
             food -= dinosaur_level * 1000
             dinosaur_level += 1
             dinosaur_HP += 10
             dinosaur_attack += 5
-            print(f"Your apatosaurus is now at level {dinosaur_level}")
+            print(f"Your {dinosaur} is now at level {dinosaur_level}")
         else:
             print("You do not have enough food.")
             print(f"You need {dinosaur_level * 1000 - food} more food.")
@@ -314,7 +314,7 @@ while running:
 
             if battle_HP == 0:
                 defeats += 1
-                print("Defeat")
+                print("Defeat...")
             else:
                 victories += 1
                 print("Victory!")

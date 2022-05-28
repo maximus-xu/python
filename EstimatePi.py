@@ -7,7 +7,7 @@ def generate_random():
 
 
 inside = 0
-total = 1000000
+total = 10000000
 
 while repeat_int <= total:
     x = generate_random()

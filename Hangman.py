@@ -53,7 +53,7 @@ while current_guess != letters:
     draw(6-remaining)
 
     if remaining == 0:
-        print("You lose")
+        print("FAIL")
         print(f"The correct answer was: {word}")
         exit(0)
     guesses.add(input_letter)
