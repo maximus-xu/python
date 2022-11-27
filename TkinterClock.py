@@ -1,20 +1,34 @@
 import tkinter as tk
-window = tk.Tk()
-
-width = 600
-height = 400
-screen_width = window.winfo_screenwidth()
-screen_height = window.winfo_screenheight()
-center_x = int(screen_width/2 - width/2)
-center_y = int(screen_height/2 - height/2)
+from datetime import datetime
 
 
-window.title('Clock')
-window.geometry(f'{width}x{height}+{center_x}+{center_y}')
+class App:
+    def __init__(self, root):
+        self.root = root
+        self.text = tk.StringVar()
+        self.ampm_text = tk.StringVar()
+        self.date_text = tk.StringVar()
+        self.time_label = tk.Label(root, textvariable=self.text, font=('Helvectia', 48))
+        self.time_label.place(x=300, y=10)
+        self.ampm_label = tk.Label(root, textvariable=self.ampm_text, font=('Helvectia', 24), foreground='grey')
+        self.ampm_label.place(x=560, y=39)
+        self.date_label = tk.Label(root, textvariable=self.date_text, font=('Helvectia', 18), foreground='blue')
+        self.date_label.place(x=300, y=80)
 
-label = tk.Label(window, text='abc', font=('Helvectia', 24))
-label = tk.Label(window, text='def', font=('Helvectia', 24))
+    def show_time(self):
+        time = datetime.now()
+        self.text.set(time.strftime('%I:%M:%S'))
+        self.ampm_text.set(time.strftime('%p'))
+        self.date_text.set(time.strftime('%A, %B %d, %Y'))
 
-label.pack(ipady=100)
+    def clock(self):
+        self.root.after(40, self.clock)
+        self.show_time()
 
-window.mainloop()
+
+root = tk.Tk()
+app = App(root)
+root.wm_title("Tkinter clock")
+root.geometry("1000x1000")
+root.after(0, app.clock)
+root.mainloop()
